@@ -7,10 +7,8 @@ edit_uri: edit/main/docs/
 # Contents
 nav: 
   - About: index.md
-  - Dynamic Programming:
-    - Basic: dp/basic.md
-  - Graph Theory:
-    - Matchings in Graphs: graph/matchings.md
+  - Deep Learning:
+    - Softmax: dl/softmax.md
 
 plugins:
   - glightbox
@@ -78,13 +76,19 @@ extra:
       link: mailto:<zhihaoyu@andrew.cmu.edu>
 
 extra_javascript:
+  - javascripts/shortcuts.js
+  - javascripts/extra.js
   - javascripts/mathjax.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
-  - javascripts/shortcuts.js
+  # - javascripts/katex.js
+  # - https://unpkg.com/katex@0/dist/katex.min.js
+  # - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+
 
 extra_css:
   - stylesheets/extra.css
+  # - https://unpkg.com/katex@0/dist/katex.min.css
 
 # Extensions
 markdown_extensions:

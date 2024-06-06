@@ -215,6 +215,7 @@
 /* def box */
 .md-typeset .admonition.def,
 .md-typeset details.def {
+  font-size: 0.9rem;
   border-width: 0;
   border-left-width: 4px;
   border-left: 0px;
