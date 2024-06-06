@@ -1,0 +1,575 @@
+.md-grid {
+    max-width: initial;
+}
+
+.md-nav, .md-typeset h1, .md-typeset h2 {
+  font-family: 'Open Sans', sans-serif;
+  color:rgb(190, 0, 0);
+}
+
+.md-typeset h1 {
+  font-size: 2.5rem;
+  background-color: #F0F8FF;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+  border-left: 10px solid #212529;
+  margin: 20px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.md-typeset h2 {
+  font-size: 1.8rem;
+  margin-left: 40px;
+  margin-bottom: 40px;
+  margin-right: 40px;
+}
+
+.md-typeset p {
+  font-size: 0.9rem;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom: 5px;
+}
+
+.md-header {
+  font-family: 'Roboto';
+}
+
+.md-tabs {
+  font-family: 'Roboto';
+}
+
+.md-footer {
+  background-color: #212529;
+}
+
+.md-nav__item.md-nav__item--active.md-nav__item--section.md-nav__item--nested{
+  color:rgb(190, 0, 0);
+}
+
+.md-nav__link.md-nav__link--passed{
+  color: rgba(13, 110, 253, 1);
+}
+
+.md-nav__link{
+  font-size: 16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  margin-top: 0;
+}
+
+.md-tabs__link {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.md-tabs__list {
+  padding-top: 0px;
+}
+
+.md-nav__link:hover, .md-nav__link:hover * {
+  color: rgb(190, 0, 0);
+  background-color: #D7EBFF;
+}
+
+.md-nav__link.md-nav__link--active, .md-nav__link.md-nav__link--active * {
+  color: rgb(190, 0, 0);
+  background-color: #D7EBFF;
+}
+
+.md-nav__link.md-nav__link--active {
+  border-left: 3px solid rgb(190, 0, 0);
+}
+
+@media screen and (min-width: 60em) {
+  [dir=ltr] .md-nav--secondary .md-nav__list {
+      padding-left: 0;
+  }
+}
+
+@media screen and (min-width: 60em) {
+  .md-nav--secondary .md-nav__list {
+      padding-bottom: 0;
+  }
+}
+
+.md-nav__list[data-md-component="toc"] {
+  color: rgba(13, 110, 253, 1);
+  /* border-left: 2px solid rgb(190, 0, 0); */
+  margin-left: 0;
+}
+
+.md-sidebar {
+  padding-top: 10px;
+}
+
+@supports selector(::-webkit-scrollbar) {
+  [dir=ltr] .md-sidebar__inner {
+    padding-right: 0; /* Adjust the rem value as needed */
+  }
+}
+
+@media screen and (min-width: 76.25em) {
+  [dir=ltr] .md-nav--primary .md-nav__item>.md-nav__link {
+      margin-right: 0;
+      /* border-left: 2px solid rgb(190, 0, 0); */
+      padding-left: 10px;
+  }
+}
+
+.md-search__input {
+  font-family: 'roboto';
+}
+
+.md-copyright__highlight {
+  font-family: 'roboto';
+}
+.md-nav__link[id^="__nav_"][id$="_label"] {
+  font-size: 25px;
+  margin-bottom: 10px;
+  font-variant: small-caps;
+  display:table-caption;
+  border-left: 3px solid;
+  padding: 0;
+}
+
+/* @media screen and (min-width: 76.25em) {
+  [dir=ltr] .md-nav--primary .md-nav__list {
+  }
+} */
+
+.md-sidebar__scrollwrap {
+  margin: 0;
+}
+
+
+.md-main[data-md-component="main"] {
+  background-color: white;
+}
+
+@media (min-width: 1200px) {
+  .md-nav__list[data-md-component="toc"] {
+    padding-left: 1px;
+  }
+  .md-main__inner {
+    margin-top: 0;
+  }
+  .md-sidebar {
+    height: auto;
+  }
+  .md-sidebar--primary {
+    border-right: 1px solid var(--md-default-fg-color--lightest);
+    width: 260px;
+  }
+
+  .md-sidebar--secondary {
+    width: 260px;
+
+  }
+  .md-nav {
+    font-size: 16px;
+  }
+
+  .md-nav__list[data-md-component="toc"] {
+    font-size: 15px;
+  }
+  
+  .md-nav .md-nav__title {
+    display: none;
+  }
+  .md-nav__icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-top: -.1rem; 
+  }
+}
+
+.md-sidebar, .md-sidebar *, .md-nav__item *, .md-nav__link *{
+  background-color: whitesmoke;
+}
+
+/* previous admonition style:
+.md-typeset .admonition,
+.md-typeset details {
+  border-width: 0;
+  border-left-width: 4px;
+} */
+
+/* add a new kind of admonition (definition admonition): */
+:root {
+  --md-primary-fg-color:        #212529;
+  --md-primary-fg-color--light: #D3D3D3;
+  --md-primary-fg-color--dark:  black;
+  --md-accent-fg-color: rgb(190, 0, 0);
+  --md-primary-bg-color: #D3D3D3;
+}
+
+:root, [data-md-color-scheme=default] {
+  --md-default-bg-color: whitesmoke;
+  --md-default-fg-color--light: #212529;
+}
+
+/* def box */
+.md-typeset .admonition.def,
+.md-typeset details.def {
+  border-width: 0;
+  border-left-width: 4px;
+  border-left: 0px;
+  background-color: #FFFFF6;
+  box-shadow:
+    inset 0 -3em 2.5em rgba(255, 255, 255, 0.3),
+    0 0 0 1px #FFFFF6,
+    0.1em 0.1em 1em rgba(167, 167, 167, 0.6);
+  margin-left: 40px;
+  margin-right: 40px;
+  padding-bottom: 3px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.md-typeset .def > p {
+  margin-left: 3px;
+  margin-top: 0;
+  margin-right: 0;
+  background-color: #FFFFF6;
+  padding-left: 0;
+}
+.md-typeset .def > .admonition-title,
+.md-typeset .def > summary {
+  margin-left: 0;
+  background-color:  #FFFFF6;
+  color: rgb(190, 0, 0);
+  margin-bottom: 0;
+  padding-left: 24px;
+  font-weight: 500;
+}
+.md-typeset .def > .admonition-title::before,
+.md-typeset .def > summary::before {
+  background-color: rgb(190, 0, 0);
+  -webkit-mask-image: var(--md-admonition-icon--def);
+          mask-image: var(--md-admonition-icon--def);
+  left: 0;
+  width: 0.85rem;
+  padding-bottom: 0;
+  margin-left: 3px;
+}
+
+.md-typeset .def > .admonition-title {
+  padding-bottom: 0;
+  padding-left: 27px;
+}
+
+/* thm box */
+.md-typeset .admonition.thm,
+.md-typeset details.thm {
+  border-width: 0;
+  border-left-width: 4px;
+  border-left: 0px;
+  background-color: whitesmoke;
+  box-shadow:
+    inset 0 -3em 2.5em rgba(255, 255, 255, 0.3),
+    0 0 0 1px whitesmoke,
+    0.1em 0.1em 1em rgba(167, 167, 167, 0.6);
+  margin-left: 40px;
+  margin-right: 40px;
+  padding-bottom: 3px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.md-typeset .thm > p {
+  margin-left: 3px;
+  margin-top: 0;
+  margin-right: 0;
+  background-color: whitesmoke;
+  padding-left: 0;
+}
+.md-typeset .thm > .admonition-title,
+.md-typeset .thm > summary {
+  margin-left: 0;
+  background-color:  whitesmoke;
+  color: rgb(190, 0, 0);
+  margin-bottom: 0;
+  padding-left: 24px;
+  font-weight: 500;
+}
+.md-typeset .thm > .admonition-title::before,
+.md-typeset .thm > summary::before {
+  background-color: rgb(190, 0, 0);
+  left: 0;
+  width: 0.85rem;
+  padding-bottom: 0;
+  margin-left: 3px;
+  -webkit-mask-image: var(--md-admonition-icon--thm);
+          mask-image: var(--md-admonition-icon--thm);
+}
+
+.md-typeset .thm > .admonition-title {
+  padding-bottom: 0;
+  padding-left: 27px;
+}
+
+/* note box */
+.md-typeset .admonition.note,
+.md-typeset details.note {
+  border-color: #D3D3D3;
+  background-color: white;
+  margin-left: 40px;
+  margin-right: 40px;
+  padding-bottom: 3px;
+  border-width: 0;
+  border-left-width: 4px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.md-typeset .note > p {
+  margin-left: 3px;
+  margin-top: 0;
+  margin-right: 0;
+  background-color: white;
+  padding-left: 0;
+}
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary {
+  margin-left: 0;
+  background-color:  white;
+  color: rgb(190, 0, 0);
+  margin-bottom: 0;
+  padding-left: 24px;
+  font-weight: 500;
+}
+.md-typeset .note > .admonition-title::before,
+.md-typeset .note > summary::before {
+  background-color: rgb(190, 0, 0);
+  left: 0;
+  width: 0.85rem;
+  padding-bottom: 0;
+  margin-left: 3px;
+  -webkit-mask-image: var(--md-admonition-icon--note);
+          mask-image: var(--md-admonition-icon--note);
+}
+
+.md-typeset .note > .admonition-title {
+  padding-bottom: 0;
+  padding-left: 27px;
+}
+
+/* example box */
+.md-typeset .admonition.eg,
+.md-typeset details.eg {
+  border-color: #ff9100;
+  background-color: white;
+  margin-left: 40px;
+  margin-right: 40px;
+  padding-bottom: 3px;
+  font-size: 0.9rem;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-width: 0;
+  border-left-width: 4px;
+}
+
+.md-typeset .admonition.eg,
+.md-typeset details.eg, .md-typeset .admonition:focus-within, .md-typeset details:focus-within {
+  box-shadow:
+    inset 0 -3em 2.5em rgba(255, 255, 255, 0.3),
+    0 0 0 1px transparent,
+    0.1em 0.1em 1em rgba(167, 167, 167, 0.6);
+}
+
+.md-typeset .eg > p {
+  margin-left: 3px;
+  margin-top: 0;
+  margin-right: 0;
+  background-color: white;
+  padding-left: 0;
+}
+
+.md-typeset .eg > .admonition-title,
+.md-typeset .eg > summary {
+  margin-left: 0;
+  color: rgb(190, 0, 0);
+  background-color: transparent;
+  margin-bottom: 0;
+  padding-left: 24px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.md-typeset .eg > .admonition-title::before,
+.md-typeset .eg > summary::before {
+  background-color: rgb(190, 0, 0);
+  left: 0;
+  width: 0.85rem;
+  padding-bottom: 0;
+  margin-left: 3px;
+  -webkit-mask-image: var(--md-admonition-icon--eg);
+          mask-image: var(--md-admonition-icon--eg);
+}
+
+.md-typeset .eg > .admonition-title {
+  padding-bottom: 0;
+  padding-left: 27px;
+}
+
+/* solution box */
+.md-typeset .admonition.sol,
+.md-typeset details.sol {
+  border-color: green;
+  background-color: white;
+  margin-left: 40px;
+  margin-right: 40px;
+  padding-bottom: 3px;
+  font-size: 0.9rem;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-width: 0;
+  border-left-width: 4px;
+}
+
+/* .md-typeset .admonition.sol,
+.md-typeset details.sol, .md-typeset .admonition:focus-within, .md-typeset details:focus-within {
+  box-shadow:
+    inset 0 -3em 2.5em rgba(255, 255, 255, 0.3),
+    0 0 0 1px transparent,
+    0.1em 0.1em 1em rgba(167, 167, 167, 0.6);
+} */
+
+.md-typeset .sol > p {
+  margin-left: 3px;
+  margin-top: 0;
+  margin-right: 0;
+  background-color: white;
+  padding-left: 0;
+}
+
+.md-typeset .sol > .admonition-title,
+.md-typeset .sol > summary {
+  margin-left: 0;
+  color: rgb(190, 0, 0);
+  background-color: transparent;
+  margin-bottom: 0;
+  padding-left: 24px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.md-typeset .sol > .admonition-title::before,
+.md-typeset .sol > summary::before {
+  background-color: green;
+  left: 0;
+  width: 0.85rem;
+  padding-bottom: 0;
+  margin-left: 3px;
+  -webkit-mask-image: var(--md-admonition-icon--sol);
+          mask-image: var(--md-admonition-icon--sol);
+}
+
+.md-typeset .sol > .admonition-title {
+  padding-bottom: 0;
+  padding-left: 27px;
+}
+
+/* exercise box */
+.md-typeset .admonition.ex,
+.md-typeset details.ex {
+  border-color: rgb(105, 19, 105);
+  background-color: white;
+  margin-left: 40px;
+  margin-right: 40px;
+  padding-bottom: 3px;
+  font-size: 0.9rem;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-width: 0;
+  border-left-width: 4px;
+}
+
+.md-typeset .admonition.ex,
+.md-typeset details.ex, .md-typeset .admonition:focus-within, .md-typeset details:focus-within {
+  box-shadow:
+    inset 0 -3em 2.5em rgba(255, 255, 255, 0.3),
+    0 0 0 1px transparent,
+    0.1em 0.1em 1em rgba(167, 167, 167, 0.6);
+}
+
+.md-typeset .ex > p {
+  margin-left: 3px;
+  margin-top: 0;
+  margin-right: 0;
+  background-color: white;
+  padding-left: 0;
+}
+
+.md-typeset .ex > .admonition-title,
+.md-typeset .ex > summary {
+  margin-left: 0;
+  color: rgb(190, 0, 0);
+  background-color: transparent;
+  margin-bottom: 0;
+  padding-left: 24px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.md-typeset .ex > .admonition-title::before,
+.md-typeset .ex > summary::before {
+  background-color: rgb(190, 0, 0);
+  left: 0;
+  width: 0.85rem;
+  padding-bottom: 0;
+  margin-left: 3px;
+  -webkit-mask-image: var(--md-admonition-icon--ex);
+          mask-image: var(--md-admonition-icon--ex);
+}
+
+.md-typeset .ex > .admonition-title {
+  padding-bottom: 0;
+  padding-left: 27px;
+}
+
+/* imnote box */
+.md-typeset .admonition.imnote,
+.md-typeset details.imnote {
+  border-color: #D3D3D3;
+  background-color: white;
+  margin-left: 40px;
+  margin-right: 40px;
+  padding-bottom: 3px;
+  border-width: 0;
+  border-left-width: 4px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.md-typeset .imnote > p {
+  margin-left: 3px;
+  margin-top: 0;
+  margin-right: 0;
+  background-color: white;
+  padding-left: 0;
+}
+.md-typeset .imnote > .admonition-title,
+.md-typeset .imnote > summary {
+  margin-left: 0;
+  background-color:  white;
+  color: rgb(190, 0, 0);
+  margin-bottom: 0;
+  padding-left: 24px;
+  font-weight: 500;
+}
+.md-typeset .imnote > .admonition-title::before,
+.md-typeset .imnote > summary::before {
+  background-color: rgb(190, 0, 0);
+  left: 0;
+  width: 0.85rem;
+  padding-bottom: 0;
+  margin-left: 3px;
+  -webkit-mask-image: var(--md-admonition-icon--imnote);
+          mask-image: var(--md-admonition-icon--imnote);
+}
+
+.md-typeset .imnote > .admonition-title {
+  padding-bottom: 0;
+  padding-left: 27px;
+}

@@ -1,0 +1,133 @@
+site_name: ML Notes
+site_url: https://tsljgj.github.io/ML-note
+repo_url: https://github.com/tsljgj/ML-note
+repo_name: tsljgj/ML-note
+edit_uri: edit/main/docs/
+
+# Contents
+nav: 
+  - About: index.md
+  - Dynamic Programming:
+    - Basic: dp/basic.md
+  - Graph Theory:
+    - Matchings in Graphs: graph/matchings.md
+
+plugins:
+  - glightbox
+  - search
+
+theme:
+  font: 
+    text: Times New Roman
+  name: material
+  # custom_dir: overrides 
+  features:
+    - navigation.tabs
+    # - navigation.tabs.sticky
+    - navigation.instant
+    - navigation.top
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - toc.follow
+    # - toc.integrate
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  icon:
+    logo: fontawesome/solid/dice-d20
+    repo: fontawesome/brands/git-alt
+    annotation: material/plus-circle-outline
+    admonition:
+      def: fontawesome/solid/pen-to-square
+      note: fontawesome/solid/circle-info
+      eg: fontawesome/solid/lightbulb
+      ex: fontawesome/solid/dumbbell
+      thm: fontawesome/solid/cube
+      sol: fontawesome/solid/check
+      imnote: fontawesome/solid/triangle-exclamation
+      abstract: fontawesome/solid/book
+      info: fontawesome/solid/circle-info
+      tip: fontawesome/solid/bullhorn
+      success: fontawesome/solid/check
+      question: fontawesome/solid/circle-question
+      warning: fontawesome/solid/triangle-exclamation
+      failure: fontawesome/solid/bomb
+      danger: fontawesome/solid/skull
+      bug: fontawesome/solid/robot
+      example: fontawesome/solid/flask
+      quote: fontawesome/solid/quote-left
+  language: en
+  palette:
+    - scheme: default
+      primary: custom
+      accent: custom
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/solid/house
+      link: https://tsljgj.github.io
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/tsljgj
+    - icon: fontawesome/brands/linkedin
+      link: www.linkedin.com/in/zhihaoy
+    - icon: fontawesome/solid/paper-plane
+      link: mailto:<zhihaoyu@andrew.cmu.edu>
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+  - javascripts/shortcuts.js
+
+extra_css:
+  - stylesheets/extra.css
+
+# Extensions
+markdown_extensions:
+
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+
+  # Python Markdown Extensions
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+copyright: Copyright &copy; 2024 Tsljgj
