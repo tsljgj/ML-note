@@ -8,7 +8,10 @@ edit_uri: edit/main/docs/
 nav: 
   - About: index.md
   - Deep Learning:
+    - Linear Models: dl/lnn.md
     - Softmax: dl/softmax.md
+  - Dynamic Programming:
+    - Basics: dp/basics.md
 
 plugins:
   - glightbox
@@ -39,13 +42,17 @@ theme:
     repo: fontawesome/brands/git-alt
     annotation: material/plus-circle-outline
     admonition:
-      def: fontawesome/solid/pen-to-square
-      note: fontawesome/solid/circle-info
+      df: fontawesome/solid/pen-to-square
+      nt: fontawesome/solid/circle-info
+      rm: fontawesome/solid/thumbtack
       eg: fontawesome/solid/lightbulb
       ex: fontawesome/solid/dumbbell
-      thm: fontawesome/solid/cube
-      sol: fontawesome/solid/check
-      imnote: fontawesome/solid/triangle-exclamation
+      tm: fontawesome/solid/cube
+      sl: fontawesome/solid/check
+      im: fontawesome/solid/star
+      pf: fontawesome/solid/key
+      st: fontawesome/solid/chess-knight
+      wr: fontawesome/solid/triangle-exclamation
       abstract: fontawesome/solid/book
       info: fontawesome/solid/circle-info
       tip: fontawesome/solid/bullhorn
@@ -88,6 +95,7 @@ extra_javascript:
 
 extra_css:
   - stylesheets/extra.css
+  - stylesheets/admonitions.css
   # - https://unpkg.com/katex@0/dist/katex.min.css
 
 # Extensions

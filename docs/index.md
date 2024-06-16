@@ -58,7 +58,7 @@ I am happy, damn bro(1).
 | `DELETE`    | :material-close:     Delete resource |
 
 ```mermaid
-graph TD;
+graph LR;
 id1((2 )) --> id2((7 ));
 id1((2 )) --> id3((5 ));
 id2((7 )) --> id4((2 ));
