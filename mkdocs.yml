@@ -12,6 +12,7 @@ nav:
     - Softmax: dl/softmax.md
   - Dynamic Programming:
     - Basics: dp/basics.md
+    - Knapsack: dp/Knapsack.md
 
 plugins:
   - glightbox

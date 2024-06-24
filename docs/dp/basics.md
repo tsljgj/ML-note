@@ -34,11 +34,38 @@
     
     Note that we treat recursive calls in subproblems as $\Theta(1)$ as they have been memorized!
 
+!!! ex "**Exercise** (The Triangle - IOI 94')"
+    
+    ``` cpp linenums="1"
+            7
+          3   8
+        8   1   0
+      2   7   4   4
+    4   5   2   6   5
+    ```
+
+    Figure 1 shows a number triangle.
+
+    Write a program that calculates the highest sum of numbers passed on a route that starts at the top and ends somewhere on the base.
+
+    Each step can go either diagonally down to the left or diagonally down to the right.
+
+    ??? sl "**Solution**"
+        Define $F[i][j]$ be the maximum sum from top to $(i,j)$. The Bellman equation is:
+        
+        $$\begin{align*}
+        F[i][j] = A[i][j] + \max
+            \begin{cases} 
+                F[i-1][j] \\
+                F[i-1][j-1] \; \text{if j>1}\\
+            \end{cases}
+        \end{align*}$$
+        
 !!! ex "**Exercise** (Coin Problem)"
     Consider a set of coins of value $\{1, 3, 4\}$. Find the minimum number of coins s.t. the total value is equal to $S$.<br>
     
     ??? sl "**Solution**"
-        Note that this problem ask for the "minimum." We think of using DP. Define $f(x)$ be the minimum #coins where the total value equals to $x$. Observe that to find $f(S)$, it suffices to find $\min\{f(S-1), f(S-3), f(S-4)\}$ (We are guessing now). The Bellman Equation of this problem is:
+        Note that this problem ask for the "minimum." We think of using DP. Define $f(x)$ be the minimum #coins where the total value equals to $x$. Observe that to find $f(S)$, it suffices to find $\min\{f(S-1), f(S-3), f(S-4)\}$ (We are guessing now). The Bellman Equation is:
     
         $$
         f(x) = \min\{f(x-1), f(x-3), f(x-4)\} + 1
@@ -186,15 +213,43 @@
         The final answer would be dp[0][0]. <br>
         Each subproblem takes constant time. The total time complexity is $\Theta(nm)$.<br>
 
-!!! ex "**Exercise** (Longest Common Subsequence)"
-    Given two strings $\mathbf{x}$ adn $\mathbf{y}$. Drop some characters in each string to make the remaining strings equal. What is length of the longest remaining string (Longest Common Subsequence)?
+!!! ex "**Exercise** (LCS: Longest Common Subsequence)"
+    Given two strings $\mathbf{x}$ and $\mathbf{y}$. Drop some characters in each string to make the remaining strings equal. What is length of the longest remaining string (Longest Common Subsequence)?
 
     ??? sl "**Solution**"
         Note that if we do not allow replacement in the "Edit Distance" problem, we are doing something very similar to LCS which only allows dropping. The precise way of converting "Edit Distance" problem to LCS is by defining: <br>
         &nbsp;&nbsp;&nbsp;&nbsp;1.  insert C, cost $1$ <br>
         &nbsp;&nbsp;&nbsp;&nbsp;2.  delete C, cost $1$ <br>
         &nbsp;&nbsp;&nbsp;&nbsp;3.  replace C with C', cost $0$ if C = C', else cost $\infty$ <br>
-    
+
+        Detailed solution:<br>
+        Define $F[i][j]$ be the LCS of $\mathbf{x}[1:i]$ and $\mathbf{y}[1:j]$. The Bellman equation is:
+        
+        $$\begin{align*}
+        F[i][j] = \max
+            \begin{cases} 
+                F[i-1][j] \\
+                F[i][j-1] \\
+                F[i-1][j-1] + 1 \; \text{if } A[i] = B[j]
+            \end{cases}
+        \end{align*}$$
+        
+!!! ex "**Exercise** (LIS: Longest Increasing Subsequence)"
+    Given a sequence $\mathbf{A}$ with length $N$, find the length of the longest increasing subsequence.
+
+    ??? sl "**Solution**"
+        This time we use prefixes. However, to guess all the possibility, we now define our subproblem in a way that enforces an element to be in the LIS: Define $F[i]$ to be the length of LIS that has $\mathbf{A}[i]$ as its last element. The Bellman equation is 
+        
+        $$\begin{align*}
+        F[i] = \max_{0\le j < i, \mathbf{A}[j]<\mathbf{A}[i]}{F[j] + 1}
+        \end{align*}$$
+
+        The key point here is: we cannot define $F[i]$ to be the LIS in $A[1:i]$ as we do not know whether $F[1:N]$ also uses the same subsequence in $F[i]$. In other word, we are not counting all the possibility. 
+
+!!! st "**Strategy** (Two Kinds of Guessing)"
+    &nbsp;&nbsp;&nbsp;&nbsp;1.  Guess which subproblem to use to solve bigger subproblem. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;2.  Add more subproblems to guess/remember more (e.g. knapsack)
+
 !!! ex "**Exercise** (Knapsack)"
     Given a knapsack (a bag) with capacity $C$ and a list of items of weight $w_i$. Find the maximum weight one can take.
     ??? sl "**Solution**"
@@ -206,6 +261,4 @@
 
         The time complexity is $\Theta(nC)$.
 
-!!! st "**Strategy** (Two Kinds of Guessing)"
-    &nbsp;&nbsp;&nbsp;&nbsp;1.  Guess which subproblem to use to solve bigger subproblem. <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;2.  Add more subproblems to guess/remember more (e.g. knapsack)
+We now have gone through many basic problems of dynamic programming. In other chapters of DP, we will see more variation of these problems (LCS, LIS, Knapsack...).
