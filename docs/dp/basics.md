@@ -230,7 +230,7 @@
             \begin{cases} 
                 F[i-1][j] \\
                 F[i][j-1] \\
-                F[i-1][j-1] + 1 \; \text{if } A[i] = B[j]
+                F[i-1][j-1] + 1 \qquad \text{if } A[i] = B[j]
             \end{cases}
         \end{align*}$$
         
