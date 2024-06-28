@@ -10,15 +10,15 @@
     Bellman Equation is the formula of how subproblems can be used to calculate the main problem. e.g. $f(x) = f(x-1) + f(x-2)$ is a Bellman Equation.
 
 !!! df "**Definition** (Subproblem Dependency DAG)"
-    The dependency relation between subproblems form a DAG - _Subproblem Dependency DAG_.  
+    The dependency relation between subproblems form a directed acyclic graph - _Subproblem Dependency DAG_.  
 
 !!! wr "**Warning** (Limitation of DP)"
-    To use memorization, the subproblem dependency graph must be acyclic.      
+    To use memorization, the subproblem dependency graph must be acyclic (it is called DAG).      
 
 !!! df "**Definition** (Bottom-Up Implementation)"
-    Bottom-up implements a DP algorithm means following topological order of the subproblem dependency DAG to do exact same computation as up-bottom. For example, when calculating the ith term of Fibonacci sequence, recursively call $f(x) = f(x-1) + f(x-2)$ is up-bottom; calculating the first term to the ith term is bottom-up. 
+    Bottom-up implementing a DP algorithm means following topological order of the subproblem dependency DAG to do the exact same computation as up-bottom (recursion). For example, when calculating the ith term of Fibonacci sequence, recursively call $f(x) = f(x-1) + f(x-2)$ is up-bottom; calculating the first term to the ith term is bottom-up. 
     
-!!! st "**Strategy** (Solving DP Problems)"
+!!! mt "**Methodology** (Solving DP Problems)"
     &nbsp;&nbsp;&nbsp;&nbsp;1.  Define subproblems $\rightarrow$ #subproblems<br>
     &nbsp;&nbsp;&nbsp;&nbsp;2.  Guess (try all possibility after settling something) $\rightarrow$ #choices for guess<br>
     &nbsp;&nbsp;&nbsp;&nbsp;3.  Relate subproblem solutions $\rightarrow$ time/subproblem (often similar to guess)<br>
@@ -146,7 +146,7 @@
         To print the plan, we access parent pointers this order: 0, parent[0], parent[parent[0]], ...   
 
 ## DP for String Problem
-!!! st "**Strategy** (Picking Subproblem for String/Sequence Input)"
+!!! mt "**Methodology** (Picking Subproblem for String/Sequence Input)"
     When the input is a string or a sequence, consider choosing these as the subproblem: <br>
     &nbsp;&nbsp;&nbsp;&nbsp;1.  suffixes `x[i:]`   $\mathcal{O}(n)$ &nbsp; topo: right to left <br>
     &nbsp;&nbsp;&nbsp;&nbsp;2.  prefixes `x[:i]`   $\mathcal{O}(n)$   &nbsp; topo: left to right <br>
@@ -246,7 +246,7 @@
 
         The key point here is: we cannot define $F[i]$ to be the LIS in $A[1:i]$ as we do not know whether $F[1:N]$ also uses the same subsequence in $F[i]$. In other word, we are not counting all the possibility. 
 
-!!! st "**Strategy** (Two Kinds of Guessing)"
+!!! mt "**Methodology** (Two Kinds of Guessing)"
     &nbsp;&nbsp;&nbsp;&nbsp;1.  Guess which subproblem to use to solve bigger subproblem. <br>
     &nbsp;&nbsp;&nbsp;&nbsp;2.  Add more subproblems to guess/remember more (e.g. knapsack)
 

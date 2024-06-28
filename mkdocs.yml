@@ -12,7 +12,10 @@ nav:
     - Softmax: dl/softmax.md
   - Dynamic Programming:
     - Basics: dp/basics.md
-    - Knapsack: dp/Knapsack.md
+    - Linear DP: dp/linear.md
+    - Knapsack: dp/knapsack.md
+    - Interval DP: dp/interval.md
+    - Tree DP: dp/tree.md
 
 plugins:
   - glightbox
@@ -47,13 +50,14 @@ theme:
       nt: fontawesome/solid/circle-info
       rm: fontawesome/solid/thumbtack
       eg: fontawesome/solid/lightbulb
-      ex: fontawesome/solid/dumbbell
+      ex: fontawesome/solid/rocket
       tm: fontawesome/solid/cube
       sl: fontawesome/solid/check
       im: fontawesome/solid/star
       pf: fontawesome/solid/key
       st: fontawesome/solid/chess-knight
       wr: fontawesome/solid/triangle-exclamation
+      mt: fontawesome/solid/worm
       abstract: fontawesome/solid/book
       info: fontawesome/solid/circle-info
       tip: fontawesome/solid/bullhorn

@@ -102,7 +102,7 @@
 .md-typeset .admonition.st,
 .md-typeset details.st {
   font-size: 0.9rem;
-  border-color: #047bfd;
+  border-color: #7c4dff;
   background-color: white;
   margin-left: 40px;
   margin-right: 40px;
@@ -140,6 +140,52 @@
 }
 
 .md-typeset .st > .admonition-title {
+  padding-bottom: 0;
+  padding-left: 27px;
+}
+
+/* methodology box */
+.md-typeset .admonition.mt,
+.md-typeset details.mt {
+  font-size: 0.9rem;
+  border-color: #047bfd;
+  background-color: white;
+  margin-left: 40px;
+  margin-right: 40px;
+  padding-bottom: 3px;
+  border-width: 0;
+  border-left-width: 4px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.md-typeset .mt > p {
+  margin-left: 3px;
+  margin-top: 0;
+  margin-right: 0;
+  background-color: white;
+  padding-left: 0;
+}
+.md-typeset .mt > .admonition-title,
+.md-typeset .mt > summary {
+  margin-left: 0;
+  background-color:  white;
+  color: rgb(190, 0, 0);
+  margin-bottom: 0;
+  padding-left: 24px;
+  font-weight: 500;
+}
+.md-typeset .mt > .admonition-title::before,
+.md-typeset .mt > summary::before {
+  background-color: rgb(190, 0, 0);
+  left: 0;
+  width: 0.85rem;
+  padding-bottom: 0;
+  margin-left: 3px;
+  -webkit-mask-image: var(--md-admonition-icon--mt);
+          mask-image: var(--md-admonition-icon--mt);
+}
+
+.md-typeset .mt > .admonition-title {
   padding-bottom: 0;
   padding-left: 27px;
 }
