@@ -67,9 +67,121 @@ To address these issues, we use _softmax_.
     
     $$
     P(\mathbf{Y} \mid \mathbf{X}) = \prod_{i=1}^n P(\mathbf{y}^{(i)} \mid \mathbf{x}^{(i)})
-    $$  
+    $$
 
-## Maximum Likelihood Estimation (MLE)
-!!! df "**Definition** (Maximum Likelihood Estimation)"
-    Maximum Likelihood Estimation (MLE) is the process of estimating the parameters of a distribution that maximize the likelihood of the observed data belonging to that distribution. [^1]
-    [^1]: [_Understanding Maximum Likelihood Estimation_](ihttps://polaris000.medium.com/understanding-maximum-likelihood-estimation-e63dff65e5b1#:~:text=Simply%20put%2C%20when%20we%20perform,with%20the%20principles%20of%20MLE.) by Aniruddha Karajg
+    To maximize $P(\mathbf{Y} \mid \mathbf{X})$, we minimize $-\log{P(\mathbf{y} \mid \mathbf{x})}$: 
+    
+    $$\begin{align*}
+    -\log{P(\mathbf{Y} \mid \mathbf{X})} = \sum_{i=1}^n{-\log{P(\mathbf{y} \mid \mathbf{x})}} = \sum_{i=1}^n{l({\mathbf{y}}^{(i)}, {\hat{\mathbf{y}}}^{(i)})}
+    \end{align*}$$
+
+    where 
+    
+    $$\begin{align*}
+    l(\mathbf{y}, \hat{\mathbf{y}}) = -\sum^q_{j=1}y_j\log{\hat{y_j}}
+    \end{align*}$$
+
+    $-\sum^q_{j=1}y_j\log{\hat{y_j}}$ is also called _Cross-Entrophy_, which will be introduced later in information theory.
+
+## Brief Information Theory
+!!! df "**Definition** (Self-Information)"
+    Shannon defined the _self-information_ $I(X)$ of event $X$ which has a probability of $p$ as 
+    
+    $$\begin{align*}
+    I(X) = -\log_2{p}
+    \end{align*}$$
+
+    as the _bits_ of information we have received for event $X$. For example, 
+    
+    $$I(\text{"0010"}) = -\log_2{(p(\text{"0010"}))} = -\log_2{(\frac{1}{2^4})} = 4 \text{bits}$$
+
+!!! nt "**Note** (Log Base 2)"
+    When discussing information theory, the default base of $\log$ is $2$ instead of $e$ as $2$ nicely corresponds to the unit "bit".
+
+!!! df "**Definition** (Entrophy)"
+    For any random variable \( X \) that follows a probability distribution \( P \) with a probability density function (p.d.f.) or a probability mass function (p.m.f.) \( p(x) \), we measure the expected amount of information through entropy $H(X)$ (or Shannon entropy):
+
+    $$
+    H(X) = -E_{x \sim P}[\log p(x)].
+    $$
+
+    To be specific, if \( X \) is discrete,
+
+    $$
+    H(X) = -\sum_i p_i \log p_i, \text{ where } p_i = P(X_i).
+    $$
+
+    Otherwise, if \( X \) is continuous, we also refer to entropy as differential entropy
+
+    $$
+    H(X) = -\int_x p(x) \log{p(x)} \, dx.
+    $$
+
+!!! im "**Important Note** (Why Expectation?)"
+    Why Expectation? Suppose there's a soccer match between China and Brazil. The probability that China wins is $0.001$ and Brazil $0.999$. If the news says Brazil wins, then there's hardly any information as this is hardly surprising. If China wins, then this is very surprising (abnormal) and contains more information. However, though China winning has more information, it does not mean that the whole system has more information. To estimate the entrophy of the entire system, we thus want to use expectation, which adds up self-information times possibility of events.
+
+!!! nt "**Note** (Why Log?)"
+    Why Log? - We want the entropy formula to be additive over independent random variables.
+    
+!!! nt "**Note** (Why Negative?)"
+    Why Negative? - More frequent events should contain less information than less common events, since we often gain more information from an unusual case than from an ordinary one. $\log$ is monotonically increasing with the probabilities, and indeed negative for all values in $[0,1]$. Hence, we add a negative sign in front of function to construct a monotonically decreasing relationship between the probability of events and their entropy, which will ideally be always positive.
+
+How can we compare the difference between two distribution? A naive way may be to calculate their entrophy difference. However, this does not make any sense as two distinct distribution may have the same entrophy. A more proper way is to take one distribution as the standard, and measure "surprises" when the other distribution "see" the standard. e.g. in people's mind, China wins Brazil has $0.001$ possibility, but if China actually wins, people will be very surprised.
+
+!!! df "**Definition** (Kullback-Leibler Divergence)"
+    Given a random variable \( X \) that follows the probability distribution \( P \) with a p.d.f. or a p.m.f. \( p(x) \), and we estimate \( P \) by another probability distribution \( Q \) with a p.d.f. or a p.m.f. \( q(x) \). Then the Kullback-Leibler (KL) divergence (or relative entropy) between \( P \) and \( Q \) is
+    
+    $$\begin{align*}
+    D_{KL}(P \parallel Q) &=\sum_{i=1}p_i\cdot(f_Q(q_i)-f_P(p_i)) \\
+                          &=\sum_{i=1}p_i\cdot(-\log{q_i}-(-\log{p_i})) \\ 
+                          &= E_{x \sim P} \left[ \log \frac{p(x)}{q(x)} \right]
+    \end{align*}$$
+    
+    where $f_Q(q_i)-f_P(p_i)$ is the entrophy difference between the ith event.
+
+!!! df "**Definition** (Cross-Entrophy)"
+    Note that 
+    
+    $$\begin{align*}
+    D_{KL}(P \parallel Q) &=\sum_{i=1}{p_i\cdot(f_Q(q_i)-f_P(p_i))} \\
+                          &=\sum_{i=1}{p_i\cdot(-\log{q_i}-(-\log{p_i}))} \\ 
+                          &=\sum_{i=1}{p_i\cdot (-\log q_i)} - \sum_{i=1}{p_i\cdot (-\log p_i)} \\
+                          &=\sum_{i=1}{p_i\cdot (-\log q_i)} - \text{entrophy of distribution P}
+    \end{align*}$$
+
+    by Gibbs' inequality, we know that 
+
+    \[
+    - \sum_{i=1}^{n} p_i \log p_i \leq - \sum_{i=1}^{n} p_i \log q_i
+    \]
+
+    Thus, to minimize KL divergence, it suffices to minimize $\sum_{i=1}{p_i\cdot (-\log q_i)}$. This term is called _Cross-Entrophy_. Formally, for a random variable \( X \), we can measure the divergence between the estimating distribution \( Q \) and the true distribution \( P \) via cross-entropy,
+
+    $$
+    CE(P, Q) = -E_{x \sim P}[\log(q(x))].
+    $$
+
+    By using properties of entropy discussed above, we can also interpret it as the summation of the entropy \( H(P) \) and the KL divergence between \( P \) and \( Q \), i.e.,
+
+    $$
+    CE(P, Q) = H(P) + D_{KL}(P \parallel Q)
+    $$
+
+    
+    
+
+
+    
+
+
+
+
+    
+    
+    
+
+    
+    
+    
+    
+    

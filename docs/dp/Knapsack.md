@@ -1,6 +1,6 @@
 # Knapsack
 
-Knapsack problem is an important topic in DP. We have already discussed one classic knapsack problem in the previous chapter. In this chapter, we will dive deeper into variations of Knapsack.
+Knapsack problem is a special topic in linear DP. It can be viewed as "DP for String Problems" which use prefixes as subproblems. We have already discussed one classic knapsack problem in the previous chapter. In this chapter, we will dive deeper into variations of Knapsack.
 
 ## 0-1 Knapsack
 
