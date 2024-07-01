@@ -10,6 +10,7 @@ nav:
   - Deep Learning:
     - Linear Models: dl/lnn.md
     - Softmax: dl/softmax.md
+    - Multilayer Perceptrons: dl/perceptron.md
   - Dynamic Programming:
     - Basics: dp/basics.md
     - Linear DP: dp/linear.md

@@ -206,6 +206,36 @@ Knapsack problem is a special topic in linear DP. It can be viewed as "DP for St
         }
         ```
 
+!!! ex "**Exercise** (Simplifying Monetary System)"
+    Define two monetary systems \( A \) and \( B \) as equivalent if every value that can be formed using the currency denominations in \( A \) can also be formed using the denominations in \( B \), and every value that cannot be formed using the denominations in \( A \) also cannot be formed using the denominations in \( B \). Given a monetary system \( A \) with \( n \) different denominations, determine the minimum number of denominations \( m \) for a system \( B \) such that \( A \) is equivalent to \( B \).
+
+    ??? sl "**Solution**"
+        Consider the sorted denominations $a_1, a_2, \cdots, a_n$. Note that we must not pick denominations less than $a_1$ because they are not representable in system $A$. We must pick $a_1$. For $a_2$, if it can be formed by $a_1$, then we should not pick it; otherwise, we must pick it or we cannot form $a_2$. Simiarly, when we want to determine whether to pick $a_i$, we want to know if $a_i$ can be formed by $a_1, a_2, \cdots, a_{i-1}$. This can be solved using the method similar to "Counting in UKP." The only difference is, instead of adding up $dp[j]$, we now seek maximum.
+
+        ``` cpp linenums="1"
+        #include<bits/stdc++.h>
+        using namespace std;
+        int a[25020], dp[25020];
+        int main(){
+            int n,ans;
+            cin>>n;
+            for(int i=1;i<=n;i++)
+                cin>>a[i];
+            sort(a+1,a+n+1);
+            memset(dp, 0, sizeof(dp));
+            dp[0] = 1;
+            ans = 0;
+            for(int i=1;i<=n;i++){
+                if(dp[a[i]]==1) continue;
+                ans++;
+                for(int j=a[i];j<=25000;j++){
+                    dp[j] = max(dp[j], dp[j-a[i]]);
+                }
+            }
+            cout<<ans<<endl;
+        }
+        ```
+        
 ## Bounded Knapsack (BKP)
 !!! df "**Model** (Bounded Knapsack)"
     Given $N$ items. $W_i$ denotes the weight/volume/size of the ith item. $V_i$ denotes the value of the ith item. Now, we have a knapsack with capacity $M$. Want to know the maximum value when putting items into the knapsack without exceeding the capacity. The ith item has $C_i$ copies. <br> <br>
