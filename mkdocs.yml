@@ -17,6 +17,8 @@ nav:
     - Knapsack: dp/knapsack.md
     - Interval DP: dp/interval.md
     - Tree DP: dp/tree.md
+  - Data Structure:
+    - Basic Data Structure: ds/basics.md
 
 plugins:
   - glightbox

@@ -165,23 +165,4 @@ How can we compare the difference between two distribution? A naive way may be t
 
     $$
     CE(P, Q) = H(P) + D_{KL}(P \parallel Q)
-    $$
-
-    
-    
-
-
-    
-
-
-
-
-    
-    
-    
-
-    
-    
-    
-    
-    
+    $$    

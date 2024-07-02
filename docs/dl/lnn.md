@@ -1,5 +1,6 @@
 # Linear Regression
 
+## Loss Function
 !!! im "**Important Note** (Probabilistic Interpretation of Squared Loss)"
     Why squared loss is a reasonable choice? Assume our target $y^{(i)}$, feature vector $x^{(i)}$, weights vector $\theta$, and bias $\epsilon^{(i)}$ are related via the equation:
     
@@ -48,7 +49,47 @@
 !!! df "**Definition** (Maximum Likelihood Estimation)"
     Maximum Likelihood Estimation (MLE) is the process of estimating the parameters of a distribution that maximize the likelihood of the observed data belonging to that distribution. [^1]
     [^1]: [_Understanding Maximum Likelihood Estimation_](ihttps://polaris000.medium.com/understanding-maximum-likelihood-estimation-e63dff65e5b1#:~:text=Simply%20put%2C%20when%20we%20perform,with%20the%20principles%20of%20MLE.) by Aniruddha Karajg
-    
+
+## Generalization
+!!! df "**Definition** (Underfitting, Overfitting and Regularization)"
+    Underfitting is the phenomenon that the model is unable to reduce the training error and to capture the pattern that we are trying to model. _Overfitting_ is the phenomenon of fitting closer to the training data than to the underlying distribution, and techniques for combatting overfitting are often called _regularization_ methods.
+
+!!! df "**Definition** (Training Error, Generalization Error, and Validation Error)"
+    The _training error_ $R_{\text{emp}}$ is a statistic calculated on the training dataset, and the _generalization error_ $R$ is an expectation taken with respect to the underlying distribution. Generalization error is what you would see if applying the model to an infinite stream of additional data examples drawn from the same underlying data distribution. Formally the training error is expressed as a **sum**:
+
+    $$
+    R_{\text{emp}}[\mathbf{X}, \mathbf{y}, f] = \frac{1}{n} \sum_{i=1}^{n} l(\mathbf{x}^{(i)}, y^{(i)}, f(\mathbf{x}^{(i)})),
+    $$
+
+    while the generalization error is expressed as an **integral**:
+
+    $$
+    R[p, f] = \mathbb{E}_{(\mathbf{x}, y) \sim P} [l(\mathbf{x}, y, f(\mathbf{x}))] = \iint l(\mathbf{x}, y, f(\mathbf{x})) p(\mathbf{x}, y) \, d\mathbf{x} \, dy.
+    $$
+
+    We can never calculate the generalization error $R$ exactly. In practice, we must **estimate** the generalization error by applying our model to an independent test set constituted of a random selection of examples $\mathbf{X}'$ and labels $\mathbf{y}'$ that were withheld from our training set. This consists of applying the same formula that was used for calculating the empirical training error but to a test set $\mathbf{X}', \mathbf{y}'$.
+
+    Error on the holdout data, i.e., validation set, is called the _validation error_.
+
+!!! mt "**Methodology** (Underfitting or Overfitting?)"
+    When our training error and validation error are both substantial but there is a little gap between them, then it may be an underfitting. <br>
+    If the training error is significantly lower than the validation error, then it may be an overfitting.
+
+!!! st "**Strategy** (Cross-Validation)"
+    $K$-fold cross-validation: Splitting the original dataset into non-overlapping subsets. Then model training and validation are executed $K$ times, each time training on subsets and validating on a different subset (the one not used for training in that round). Finally, the training and validation errors are estimated by averaging over the results from the experiments.
+
+!!! nt "**Note** (Fixing Overfitting)"
+    A very blunt way to fix overfitting is to reduce the number of parameters (weights). The intuition is: a higher degree polynomial can depict a more complicated model than a lower degree polynomial. So if #weights is large, then the polynomial may fit in with the training dataset too well.
+
+## Weight Decay
+!!! df "**Definition** (Weight Decay)"
+    Rather than directly manipulating the number of parameters, weight decay, operates by restricting the values that the parameters can take. More commonly called $\ell_2$ regularization outside of deep learning circles when optimized by minibatch stochastic gradient descent, weight decay might be the most widely used technique for regularizing parametric machine learning models.
+
+    - [ ] Weight Decay Interpretation
+    - [ ] Lagrange Multiplier Interpretation
+    - [ ] Bayes Interpretation
+
+## Analytical Solution of Linear Regression
 !!! df "**Definition** (Projection Matrix)"
     The projection matrix of vector $\mathbf{v}$ is the outer product of $\mathbf{v}$ and itself &nbsp; "divides by" their inner product:
 
