@@ -185,6 +185,92 @@
         <br>&nbsp;&nbsp;&nbsp;&nbsp; 3. After we put i into the queue, we must maintain a monotonic queue
 
         Note that there should be at least one element in the queue, or we cannot ensure there is at least one element in the queue. Thus, it is vital important to put `q[++r] = i;` at the end of the loop. The right endpoint we are considering at the begining of the loop is $i$, and notice that $i-1$ will always be in the queue as it is push into the queue at last without popping, which guaranteed that we have at least one element in the interval (in the queue).
+
+## Linked List
+
+!!! df "**Strategy** (Implementing Linked List)"
+    
+    ``` cpp linenums="1"
+    struct Node {
+        int value;
+        Node *prev,  *next;
+    };
+    Node *head, *tail;
+
+    void init(){
+        head = new Node();
+        tail = new Node();
+        head->next = tail;
+        tail->prev = head;
+    }
+
+    void insert(Node *p, int val){
+        q = new Node();
+        q->value = val;
+        p->next->prev = q;
+        q->next = p->next;
+        p->next = q;
+        q->prev = p;
+    }
+
+    void remove(Node *p){
+        p->prev->next = p->next;
+        p->next->prev = p->prev;
+        delete p;
+    }
+
+    void recycle(){
+        while(head!=tail){
+            head = head->next;
+            delete head->prev;
+        }
+        delete tail;
+    }
+    ```
+
+!!! nt "**Note** (Advantage of Linked List)"
+    The key advantage of linked list is that it allows us to insert or remove elements between elements in $\mathcal{O}(1)$.
+
+!!! ex "**Exercise** (Neighbor Value Search)"
+    Given a sequence $A$ of length $n$, for each element in the sequence $A_i$, find:
+    
+    $$\begin{align*}
+    \min_{1\le j<i}\left| A_i - A_j\right|
+    \end{align*}$$
+
+    and corresponding $j$. If multiple minimum exist, pick smaller $A_j$.
+
+    ??? sl "**Solution**"
+        Note that the answer for $A_i$ only depends on $A_1, \cdots, A_{i-1}$, so we can process the sequence from the back to the front, deleting already processed elements using linked list. More precisely, sort $A$ and construct a linked list for the sorted elements. Use array `B` to record the index of the original sequence, i.e., $B_i$ (a pointer) points to the element $x$ in the linked list, where $x$ is indexed $i$ in $A$. Then, for each $A_i$, the `prev` and `next` in the linked list are the closest elements we need to compare. We process $B_n$, and then delete the element $B_n$ points to; and then we process $B_{n-1}$, delete the element $B_{n-1}$ points to, and so on...
+    
+!!! ex "**Exercise** (Running Median)"
+    See ...
+
+## Adjacency List
+It is said that adjacency list and forward star representation are different in a way that adjacency list uses linked list and forward star uses array, but they share the same idea. In OI, I'll just use forward star.
+
+!!! df "**Definition** (Forward Star)"
+    
+    ``` cpp linenums="1"
+    // adding an edge from vertex x to vertex y, (x,y), with weight z
+    void add(int x, int y, int z){
+        ver[++tot] = y, edge[tot] = z;
+        next[tot] = head[x], head[x] = tot;
+    }
+
+    // search all edges that start from vertex x 
+    for(int i=head[x]; i; i=next[i]){
+        int y = ver[i], z = edge[i];
+        // an edge (x,y) with weight z
+    }
+    ```
+    
+    
+
+
+     
+
+
         
         
     

@@ -60,8 +60,8 @@ Linearity is not always the case for models in reality. We sometimes want to fin
     \text{pReLU}(x) = \max(0,x) + \alpha\min(0,x)
     \end{align*}$$
 
-!!! df "**Definition** (Sigmoid)"
-    The sigmoid function transforms those inputs whose values lie in the domain $\mathbb{R}$, to outputs that lie on the interval $(0, 1)$. For that reason, the sigmoid is often called a squashing function: it squashes any input in the range $(-\infty, \infty)$ to some value in the range $(0, 1)$:
+!!! df "**Definition** (Sigmoid/Logistic)"
+    The sigmoid function, or logistic function, transforms those inputs whose values lie in the domain $\mathbb{R}$, to outputs that lie on the interval $(0, 1)$. For that reason, the sigmoid is often called a squashing function: it squashes any input in the range $(-\infty, \infty)$ to some value in the range $(0, 1)$:
 
     $$
     \text{sigmoid}(x) = \frac{1}{1 + \exp(-x)}.
