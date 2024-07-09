@@ -13,6 +13,7 @@ nav:
     - Multilayer Perceptrons (MLP): dl/perceptron.md
     - Logistic Regression: dl/logistic.md
     - Generalized Linear Models: dl/glms.md
+    - Generative Learning Algorithms: dl/generative.md
     - Convolutional Neural Networks (CNN): dl/cnn.md
   - Dynamic Programming:
     - Basics: dp/basics.md
