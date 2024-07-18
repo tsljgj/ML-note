@@ -63,7 +63,7 @@
     [^1]: [_Wikipedia: Posterior Probability_](https://en.wikipedia.org/wiki/Posterior_probability)    
 
 !!! im "**Important Note** (GLA Logistic)"
-    When using GLAs to do a classification, we first learn $p(y=0)$ and $p(y=1)$, the **Class Priors**, and $p(x\mid y=0)$ and $p(x\mid y=1)$. Then, we can use Bayes rule to derive the posterior distribution on $y$ given $x$:
+    When using GLAs to do a classification, we first use MLE to learn the joint probability $p(x,y)$, which is to learn $p(y=0)$ and $p(y=1)$, the **Class Priors**, and $p(x\mid y=0)$ and $p(x\mid y=1)$. Then, we can use Bayes rule to derive the posterior distribution:
     
     $$\begin{align*}
     p(y\mid x) &= \frac{p(x\mid y)p(y)}{p(x)} \\
@@ -77,6 +77,8 @@
     \[
     \arg \max_{y} p(y \mid x) = \arg \max_{y} \frac{p(x \mid y) p(y)}{p(x)} = \arg \max_{y} p(x \mid y) p(y).
     \]
+
+There are two different types of generative learning models: _Gaussian Discriminant Analysis Model_ and _Naive Bayes_. We’ll introduce them in the following.
 
 ## Gaussian Discriminant Analysis (GDA)
 
@@ -194,7 +196,7 @@ Having chosen our feature vector, we now want to build a generative model. So, w
     \]
 
     Maximizing this with respect to \( \phi_y \), \( \phi_{j \mid y=0} \), and \( \phi_{j \mid y=1} \) gives the maximum likelihood estimates:
-
+    
     \[
     \begin{align*}
     \phi_{j \mid y=1} &= \frac{\sum_{i=1}^n 1 \{ x_j^{(i)} = 1 \land y^{(i)} = 1 \}}{\sum_{i=1}^n 1 \{ y^{(i)} = 1 \}} \\
@@ -227,6 +229,20 @@ Having chosen our feature vector, we now want to build a generative model. So, w
     \]
 
     Thus, for a house with living area 890 square feet, we would set the value of the corresponding feature \( x_j \) to 3. We can then apply the Naive Bayes algorithm, and model \( p(x_j \mid y) \) with a multinomial distribution, as described previously. When the original, continuous-valued attributes are not well-modeled by a multivariate normal distribution, discretizing the features and using Naive Bayes (instead of GDA) will often result in a better classifier.
+
+!!! im "**Important Note** (Comparing GDA and NB)"
+    GDA: <br>
+
+    - continuous $x \in \mathbb{R}^d$ <br>
+    - $p(x\mid y) \sim \mathcal{N}(\mu_y, \Sigma)$ <br>
+    - $p(y\mid x) = \frac{1}{1+\text{exp}(-\theta^Tx)}$ <br>
+    
+    NB: <br>
+    
+    - discrete $x$ <br>
+    - conditional Independence Assumption: $p(x_j \mid y, x_k) = p(x_j\mid y)$ <br>
+    - Bernoulli Event Model: $p(x_j \mid y) \sim \text{Bernoulli}[x_j \text{is jth word in vocabulary}]$ <br>
+    - multinomial Event Model: $p(x_j \mid y) \sim \text{Multinomial}[x_j \text{is jth word in message}]$
 
 ## Laplace Smoothing
 

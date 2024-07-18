@@ -14,6 +14,10 @@ nav:
     - Logistic Regression: dl/logistic.md
     - Generalized Linear Models: dl/glms.md
     - Generative Learning Algorithms: dl/generative.md
+    - Kernel Methods: dl/kernel.md
+    - Gaussian Processes: dl/gaussian.md
+    - Markov Decision Processes (MDP): dl/mdp.md
+    - Unsupervised Learning: dl/unsupervised.md
     - Convolutional Neural Networks (CNN): dl/cnn.md
   - Dynamic Programming:
     - Basics: dp/basics.md
