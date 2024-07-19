@@ -18,6 +18,7 @@ nav:
     - Gaussian Processes: dl/gaussian.md
     - Markov Decision Processes (MDP): dl/mdp.md
     - Unsupervised Learning: dl/unsupervised.md
+    - k - Nearest Neighbor (kNN): dl/knn.md
     - Convolutional Neural Networks (CNN): dl/cnn.md
   - Dynamic Programming:
     - Basics: dp/basics.md

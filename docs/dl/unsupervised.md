@@ -76,5 +76,3 @@ Is the k-means algorithm guaranteed to converge? Yes it is, in a certain sense. 
 - [ ] Factor Analysis
 - [ ] Principal Components Analysis (PCA)
 - [ ] Independent Components Analysis (ICA)
-    
-    
