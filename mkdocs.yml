@@ -29,6 +29,8 @@ nav:
     - Tree DP: dp/tree.md
   - Data Structure:
     - Basic Data Structure: ds/basics.md
+  - OI Math:
+    - Prime: math/prime.md
 
 plugins:
   - glightbox
