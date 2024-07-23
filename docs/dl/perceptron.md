@@ -34,32 +34,7 @@ Linearity is not always the case for models in reality. We sometimes want to fin
     \end{align*}$$
 
 ## Activation Functions
-!!! df "**Definition** (ReLU Function)"
-    _Rectified Linear Unit_ (ReLU) provides a very simple nonlinear transformation. Given an element $x$, the function is defined as the maximum of that element and $0$:
-
-    $$
-    \text{ReLU}(x) = \max(x, 0)
-    $$
-
-    <figure markdown="span">
-    ![Image title](https://d2l.ai/_images/output_mlp_76f463_18_0.svg){ width="400" }
-    <figcaption>ReLU Function</figcaption>
-    </figure>
-
-    When the input is negative, the derivative of the ReLU function is 0, and when the input is positive, the derivative of the ReLU function is 1. Note that the ReLU function is not differentiable when the input takes value precisely equal to 0. In these cases, we default to the left-hand-side derivative and say that the derivative is 0 when the input is 0. We can get away with this because the input may never actually be zero.
-
-    <figure markdown="span">
-    ![Image title](https://d2l.ai/_images/output_mlp_76f463_33_0.svg){ width="400" }
-    <figcaption>Derivative of ReLU Function</figcaption>
-    </figure>
-
-!!! df "**Definition** (pReLU)"
-    The parametrized ReLU (pReLU) adds a linear term to ReLU, so some information still gets through, even when the argument is negative:
-    
-    $$\begin{align*}
-    \text{pReLU}(x) = \max(0,x) + \alpha\min(0,x)
-    \end{align*}$$
-
+We'll first introduce two uncommon activation functions, and then a useful one.
 !!! df "**Definition** (Sigmoid/Logistic)"
     The sigmoid function, or logistic function, transforms those inputs whose values lie in the domain $\mathbb{R}$, to outputs that lie on the interval $(0, 1)$. For that reason, the sigmoid is often called a squashing function: it squashes any input in the range $(-\infty, \infty)$ to some value in the range $(0, 1)$:
 
@@ -87,6 +62,13 @@ Linearity is not always the case for models in reality. We sometimes want to fin
     <figcaption>Derivative of Sigmoid Function</figcaption>
     </figure>
 
+!!! im "**Important Note** (Limitation of Sigmoid Function)"
+    In practice, the sigmoid non-linearity has recently fallen out of favor and it is rarely ever used. It has two major drawbacks:<br>
+    
+    - Sigmoids saturate and kill gradients. When the neuron’s activation saturates at either tail of 0 or 1, the gradient at these regions is almost zero. During backpropagation, local gradient will be multiplied to the gradient of the gate’s output. Therefore, if the local gradient is very small, it will “kill” the gradient and almost no signal will flow through the neuron. Additionally, if the initial weights are too large then most neurons would become saturated and the network will barely learn, so one must pay extra caution when initializing the weights. <br>
+    
+    - Sigmoid outputs are not zero-centered. Neurons in later layers in a Neural Network would be receiving data that is not zero-centered.If the data coming into a neuron is always positive, then the gradient on the weights during backpropagation become either all be positive, or all negative (depending on the gradient of the whole expression). This could introduce undesirable zig-zagging dynamics in the gradient updates for the weights.
+
 !!! df "**Definition** (Tanh)"  
     Like the sigmoid function, the tanh (hyperbolic tangent) function also squashes its inputs, transforming them into elements on the interval between $(-1,1)$:
 
@@ -113,3 +95,58 @@ Linearity is not always the case for models in reality. We sometimes want to fin
     ![Image title](https://d2l.ai/_images/output_mlp_76f463_93_0.svg){ width="400" }
     <figcaption>Derivative of Tanh Function</figcaption>
     </figure>
+
+!!! df "**Definition** (ReLU Function)"
+    _Rectified Linear Unit_ (ReLU) provides a very simple nonlinear transformation. Given an element $x$, the function is defined as the maximum of that element and $0$:
+
+    $$
+    \text{ReLU}(x) = \max(x, 0)
+    $$
+
+    <figure markdown="span">
+    ![Image title](https://d2l.ai/_images/output_mlp_76f463_18_0.svg){ width="400" }
+    <figcaption>ReLU Function</figcaption>
+    </figure>
+
+    When the input is negative, the derivative of the ReLU function is 0, and when the input is positive, the derivative of the ReLU function is 1. Note that the ReLU function is not differentiable when the input takes value precisely equal to 0. In these cases, we default to the left-hand-side derivative and say that the derivative is 0 when the input is 0. We can get away with this because the input may never actually be zero.
+
+    <figure markdown="span">
+    ![Image title](https://d2l.ai/_images/output_mlp_76f463_33_0.svg){ width="400" }
+    <figcaption>Derivative of ReLU Function</figcaption>
+    </figure>
+
+!!! im "**Important Note** (Pros and Cons of ReLU)"
+    - (+) It was found to greatly accelerate (e.g. a factor of 6 in Krizhevsky et al.) the convergence of stochastic gradient descent compared to the sigmoid/tanh functions. It is argued that this is due to its linear, non-saturating form. <br>
+    - (+) Compared to tanh/sigmoid neurons that involve expensive operations (exponentials, etc.), the ReLU can be implemented by simply thresholding a matrix of activations at zero. <br>
+    - (-) ReLU units can be fragile during training and can “die”. For example, a large gradient flowing through a ReLU neuron could cause the weights to update in such a way that the neuron will never activate on any datapoint again. For example, you may find that as much as 40% of your network can be “dead” if the learning rate is set too high. With a proper setting of the learning rate this is less frequently an issue.
+
+!!! df "**Definition** (Leaky ReLU)"
+    Leaky ReLUs are one attempt to fix the “dying ReLU” problem. Instead of the function being zero when x < 0, a leaky ReLU will instead have a small positive slope (of 0.01, or so). That is, the function computes:
+    
+    $$\begin{align*}
+    f(x) = 1(x<0)(\alpha x) + 1(x\ge 0)(x)
+    \end{align*}$$
+    
+    where $\alpha$ is a small constant. Some people report success with this form of activation function, but the results are not always consistent. The slope in the negative region can also be made into a parameter of each neuron, as seen in pReLU neurons.
+    
+!!! df "**Definition** (pReLU)"
+    The parametrized ReLU (pReLU) adds a linear term to ReLU, so some information still gets through, even when the argument is negative:
+    
+    $$\begin{align*}
+    \text{pReLU}(x) = \max(0,x) + \alpha\min(0,x)
+    \end{align*}$$
+
+!!! df "**Definition** (Maxout)"
+    Maxout neuron (introduced by [<u>Goodfellow</u>](https://arxiv.org/abs/1302.4389) et al.) generalizes the ReLU and its leaky version. The Maxout neuron computes the function: 
+    
+    $$\begin{align*}
+    \max(w_1^Tx + b_1, w_2^Tx + b_2)
+    \end{align*}$$
+    
+    Note that both ReLU and Leaky ReLU are a special case of this form (e.g. for ReLU we have $w_1, b_1 = 0$). The Maxout neuron therefore enjoys all the benefits of a ReLU unit (linear regime of operation, no saturation) and does not have its drawbacks (dying ReLU). However, unlike the ReLU neurons it doubles the number of parameters for every single neuron, leading to a high total number of parameters.
+
+!!! nt "**Note** (Mixing Activation Functions)"
+    It is very rare to mix and match different types of neurons in the same network, even though there is no fundamental problem with doing so.
+
+!!! st "**Strategy** (What Neuron Should I Use?)"
+    Use the ReLU non-linearity, be careful with your learning rates and possibly monitor the fraction of “dead” units in a network. If this concerns you, give Leaky ReLU or Maxout a try. Never use sigmoid. Try tanh, but expect it to work worse than ReLU/Maxout.

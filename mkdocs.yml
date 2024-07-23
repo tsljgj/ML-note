@@ -21,6 +21,7 @@ nav:
     - k - Nearest Neighbor (kNN): dl/knn.md
     - Linear Classifier: dl/linearClassifier.md
     - Convolutional Neural Networks (CNN): dl/cnn.md
+    - Neural Network Architectures: dl/nn.md
   - Dynamic Programming:
     - Basics: dp/basics.md
     - Linear DP: dp/linear.md
