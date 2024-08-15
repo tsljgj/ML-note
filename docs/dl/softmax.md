@@ -62,6 +62,39 @@ To address these issues, we use _softmax_.
     
     This accelerates the dominant operation into a matrix–matrix product.
 
+!!! im "**Important Note** (Loss for Softmax)"
+    Define $f(x_i;W) = Wx_i$. The Loss for Softmax of ith image is:
+    
+    $$\begin{align*}
+    L_i = -\log(\frac{e^f_{y_i}}{\sum_j e^{f_j}})
+    \end{align*}$$
+    
+    In code:
+
+    ``` py linenums="1"
+    loss -= np.log(softmax[y[i]])
+    ```
+
+!!! im "**Important Note** (Gradient of Softmax)"
+    Note that:
+    
+    $$\begin{align*}
+    L = -\log(p_{y_i})
+    \end{align*}$$
+
+    Then after the calculation of the its derivative for $W$, we have: 
+    
+    \[
+    \frac{\partial L}{\partial W_{p,q}} = (p_q - 1(q = y[i]))x_p
+    \]
+
+    In code:
+    
+    ``` py linenums="1"
+    softmax[y[i]] -= 1
+    dW += np.outer(X[i], softmax)       # gradient
+    ```
+    
 !!! rm "**Remark** (Viewing Softmax Output as Likelihood)"
     The softmax function gives us a vector $\hat{\mathbf{y}}$. We can interpret it as the estimated conditional probabilities of each category, given any input $\mathbf{x}$. e.g. $\hat{y}_1=P(y=(1,0,0) \mid \mathbf{x})$. Thus we have 
     

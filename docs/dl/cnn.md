@@ -61,19 +61,19 @@
 !!! im "**Important Note** (Why Padding?)"
     Why use padding? In addition to keeping the spatial sizes constant after CONV, doing this actually improves performance. If the CONV layers were to not zero-pad the inputs and only perform valid convolutions, then the size of the volumes would reduce by a small amount after each CONV, and the information at the borders would be “washed away” too quickly.
 
-!!! df "**Definition** (Computing Output volume)"
+!!! im "**Important Note** (Computing Output volume)"
     The Conv Layer:
 
     - Accepts a volume of size \( W_1 \times H_1 \times D_1 \)
-    - Requires four hyperparameters:
-    - Number of filters \( K \),
-    - their spatial extent \( F \),
-    - the stride \( S \),
-    - the amount of zero padding \( P \).
-    - Produces a volume of size \( W_2 \times H_2 \times D_2 \) where:
-    - \( W_2 = \left(\frac{W_1 - F + 2P}{S}\right) + 1 \)
-    - \( H_2 = \left(\frac{H_1 - F + 2P}{S}\right) + 1 \) (i.e. width and height are computed equally by symmetry)
-    - \( D_2 = K \)
+    - Requires four hyperparameters: <br>
+       &nbsp;&nbsp;&nbsp;&nbsp;1. Number of filters \( K \), <br>
+       &nbsp;&nbsp;&nbsp;&nbsp;2. their spatial extent \( F \), <br>
+       &nbsp;&nbsp;&nbsp;&nbsp;3. the stride \( S \), <br>
+       &nbsp;&nbsp;&nbsp;&nbsp;4. the amount of zero padding \( P \).
+    - Produces a volume of size \( W_2 \times H_2 \times D_2 \) where: <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;\( W_2 = \left(\frac{W_1 - F + 2P}{S}\right) + 1 \) <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;\( H_2 = \left(\frac{H_1 - F + 2P}{S}\right) + 1 \) &nbsp; (i.e. width and height are computed equally by symmetry) <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;\( D_2 = K \)
     - With parameter sharing, it introduces \( F \cdot F \cdot D_1 \) weights per filter, for a total of \( (F \cdot F \cdot D_1) \cdot K \) weights and \( K \) biases.
     - In the output volume, the \( d \)-th depth slice (of size \( W_2 \times H_2 \)) is the result of performing a valid convolution of the \( d \)-th filter over the input volume with a stride of \( S \), and then offset by \( d \)-th bias.
 
@@ -92,13 +92,13 @@
     
     The local regions (blocks that have the same shape as the filter) in the input image are stretched out into columns in an operation commonly called **im2col**. For example, if the input is [227x227x3] and it is to be convolved with 11x11x3 filters at stride 4, then we would take blocks of shape [11x11x3] in the input and stretch each block into a column vector of size 11*11*3 = 363. Iterating this process in the input at stride of 4 gives $((227-11)/4+1)^2$ = 3025 blocks, leading to an output matrix $X_{col}$ of _im2col_ of size [363 x 3025].<br>
     <br>
-    Remember that we are to multiply each column of $X_{col}$ with the weights of the CONV Layer. The weights of the CONV layer are similarly stretched out into rows. For example, if there are 96 filters of size [11x11x3] this would give a matrix $W_row$ of size [96 x 363].<br>
+    Remember that we are to multiply each column of $X_{col}$ with the weights of the CONV Layer. The weights of the CONV layer are similarly stretched out into rows. For example, if there are 96 filters of size [11x11x3] this would give a matrix $W_{row}$ of size [96 x 363].<br>
     <br>
     The result of a convolution is now equivalent to performing one large matrix multiply `np.dot(W_row, X_col)`. In our example, the output of this operation would be [96 x 3025], giving the output of the dot product of each filter at each location.<br>
     <br>
     The result must finally be reshaped back to its proper output dimension [55x55x96].<br>
     <br>
-    The downside is that it can use a lot of memory, since some values in the input volume are replicated multiple times in $X_{col}$. The benefit is that there are many very efficient implementations of Matrix Multiplication that we can take advantage of (e,g. BLAS API). 
+    The downside is that it can use a lot of memory, since some values in the input volume are replicated multiple times in $X_{col}$. The benefit is that there are many very efficient implementations of Matrix Multiplication that we can take advantage of (e.g. BLAS API). 
 
 !!! nt "**Note** (1x1 Convolution)"
     As an aside, several papers use 1x1 convolutions, as first investigated by [<u>Network in Network</u>](http://arxiv.org/abs/1312.4400).
@@ -110,15 +110,15 @@
     The most common form is a pooling layer with filters of size 2x2 applied with a stride of 2 downsamples every depth slice in the input by 2 along both width and height, discarding 75% of the activations. Every MAX operation would in this case be taking a max over 4 numbers (little 2x2 region in some depth slice). The depth dimension remains unchanged. More generally, the pooling layer: <br>
     <br>
 
-    - Accepts a volume of size \( W_1 \times H_1 \times D_1 \)
-    - Requires two hyperparameters:
-    - their spatial extent \( F \),
-    - the stride \( S \),
-    - Produces a volume of size \( W_2 \times H_2 \times D_2 \) where:
-    - \( W_2 = \left(\frac{W_1 - F}{S}\right) + 1 \)
-    - \( H_2 = \left(\frac{H_1 - F}{S}\right) + 1 \)
-    - \( D_2 = D_1 \)
-    - Introduces zero parameters since it computes a fixed function of the input
+    - Accepts a volume of size \( W_1 \times H_1 \times D_1 \).
+    - Requires two hyperparameters: <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;1. their spatial extent \( F \), <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;2. the stride \( S \). <br>
+    - Produces a volume of size \( W_2 \times H_2 \times D_2 \) where: <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;\( W_2 = \left(\frac{W_1 - F}{S}\right) + 1 \) <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;\( H_2 = \left(\frac{H_1 - F}{S}\right) + 1 \) <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;\( D_2 = D_1 \)
+    - Introduces zero parameters since it computes a fixed function of the input.
     - For Pooling layers, it is not common to pad the input using zero-padding.
 
     In most cases, \( F = 3 \), \( S = 2 \) (also called overlapping pooling), or more commonly \( F = 2 \), \( S = 2 \). Pooling sizes with larger receptive fields are too destructive.
