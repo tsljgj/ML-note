@@ -12,7 +12,7 @@
     (P7) $a \cdot a^{-1} = a^{-1} \cdot a = 1$, for $a \not=0$<br>
     (P8) $a \cdot b = b \cdot a$<br>
     (P9) $a \cdot (b + c) = a \cdot b + a \cdot c$<br><br>
-    For the following properties, $P$ is the collection of all positive numbers
+    For the following properties, $P$ is the collection of all positive numbers<br>
     (P10) $\forall a$, one and only one of the following holds:
    
     $$
