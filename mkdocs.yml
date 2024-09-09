@@ -34,6 +34,8 @@ nav:
     - Prime: math/prime.md
   - Real Analysis:
     - Basic Number Theory: math/numbers.md
+  - Linear Algebra:
+    - Introduction: math/linear_alg/intro.md
 
 plugins:
   - glightbox
