@@ -27,7 +27,7 @@ Where each of the numbers in the matrix represent a coefficient on the left hand
 If you carefully think about it, there are two ways you can represent the equation with a picture:
 First, you can think about it as two lines intersecting each other, with $2x - y = 0$ being the first one, and $-x + 2y = 3$ being the second one:
 <figure markdown="span">
-![Row Image](./assets/images/row_picture.png "Row Image")
+![Row Image](../../graphs/math/linear_alg/row_picture.png "Row Image")
 <figcaption>Generated Using Geogebra</figcaption>
 </figure>
 Or you can think about it as a Vector Addition problem:
@@ -36,3 +36,4 @@ x\begin{bmatrix}2\\-1\end{bmatrix} + y
 \begin{bmatrix}-1\\2\end{bmatrix} = 
 \begin{bmatrix}0\\3\end{bmatrix}
 $$
+Which means that it would become a ## Linear Combination ## of the two columns of the coefficient matrix.
