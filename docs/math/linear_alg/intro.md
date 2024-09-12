@@ -57,7 +57,7 @@ The following way would be an easy introduction to Matrix Multiplication:
 
 $$
 \begin{bmatrix}2&-1\\-1&2\end{bmatrix}
-\begin{bmatrix}1\\2\end{bmatrix}\\
+\begin{bmatrix}1\\2\end{bmatrix} \\
 =\begin{aligned} &\begin{bmatrix}1\\2\end{bmatrix}\\
 \begin{bmatrix}2&-1\\-1&2\end{bmatrix}
 &\begin{bmatrix}a_1\\a_2\end{bmatrix}
@@ -67,12 +67,19 @@ $$
 where $a_1$ and $a_2$ would be the "inner product" of the row on their left and the column on their top. Therefore:
 
 $$
-a_1 = \begin{bmatrix}2&-1\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix}=2\cdot1 + 2\cdot(-1) = 0\\
+a_1 = \begin{bmatrix}2&-1\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix}=2\cdot1 + 2\cdot(-1) = 0 \\
 a_2 = \begin{bmatrix}-1&2\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix}=-1\cdot1 + 2\cdot2 = 3
 $$
 
 But in fact, there is another more essential way to think about matrix multiplications.
 
 $$
-\begin{bmatrix}2&-1\\-1&2\end{bmatrix}\begin{bmatrix}
+\begin{bmatrix}2&-1\\-1&2\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix}
+$$
+
+can be interpreted as a **Linear Combination of the Columns** of the matrix:
+
+$$
+\begin{bmatrix}2&-1\\-1&2\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix}=
+1\begin{bmatrix}2\\-1\end{bmatrix}+2\begin{bmatrix}-1\\2\end{bmatrix}=\begin{bmatrix}0\\3\end{bmatrix}
 $$
