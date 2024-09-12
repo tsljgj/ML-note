@@ -65,7 +65,7 @@ $$
 where the vector $\begin{bmatrix}a_1\\a_2\end{bmatrix}$ is the product, and $a_1$ and $a_2$ would be the "inner product" of the row on their left and the column on their top. Therefore:
 
 $$
-a_1 = \begin{bmatrix}2&-1\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix}=2\cdot1 + 2\cdot(-1) = 0\\
+a_1 = \begin{bmatrix}2&-1\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix}=2\cdot1 + 2\cdot(-1) = 0,\\
 a_2 = \begin{bmatrix}-1&2\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix}=-1\cdot1 + 2\cdot2 = 3
 $$
 
@@ -91,4 +91,4 @@ $$
 \end{aligned}
 $$
 
-Such interpretations may seem trivial and cumbersome for now, but in the next chapter we shall see they come into use.
+One observation is that if we multiply the matrix by something we can manipulate the columns of the matrix, and if we multiply something by the matrix we can manipulate the rows of the matrix. Such interpretations may seem trivial and cumbersome for now, but in the next chapter we shall see they come into use.
