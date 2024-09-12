@@ -125,6 +125,72 @@ There are several ways of controlling the capacity of Neural Networks to prevent
 !!! im "**Important Note** (In Practice)"
     It is most common to use a single, global L2 regularization strength that is cross-validated. It is also common to combine this with dropout applied after all layers. The value of $p=0.5$ is a reasonable default, but this can be tuned on validation data.
 
+!!! im "**Important Note** (Implementing Dropout)"
+
+    ``` py linenums="1"
+    def dropout_forward(x, dropout_param):
+        """Forward pass for inverted dropout.
+
+        Note that this is different from the vanilla version of dropout.
+        Here, p is the probability of keeping a neuron output, as opposed to
+        the probability of dropping a neuron output.
+        See http://cs231n.github.io/neural-networks-2/#reg for more details.
+
+        Inputs:
+        - x: Input data, of any shape
+        - dropout_param: A dictionary with the following keys:
+        - p: Dropout parameter. We keep each neuron output with probability p.
+        - mode: 'test' or 'train'. If the mode is train, then perform dropout;
+            if the mode is test, then just return the input.
+        - seed: Seed for the random number generator. Passing seed makes this
+            function deterministic, which is needed for gradient checking but not
+            in real networks.
+
+        Outputs:
+        - out: Array of the same shape as x.
+        - cache: tuple (dropout_param, mask). In training mode, mask is the dropout
+        mask that was used to multiply the input; in test mode, mask is None.
+        """
+        p, mode = dropout_param["p"], dropout_param["mode"]
+        if "seed" in dropout_param:
+            np.random.seed(dropout_param["seed"])
+
+        mask = None
+        out = None
+
+        if mode == "train":
+            mask = (np.random.rand(*x.shape) < p) / p
+            out = x * mask
+
+        elif mode == "test":
+            out = x
+            mask = None
+
+        cache = (dropout_param, mask)
+        out = out.astype(x.dtype, copy=False)
+
+        return out, cache
+
+
+    def dropout_backward(dout, cache):
+        """Backward pass for inverted dropout.
+
+        Inputs:
+        - dout: Upstream derivatives, of any shape
+        - cache: (dropout_param, mask) from dropout_forward.
+        """
+        dropout_param, mask = cache
+        mode = dropout_param["mode"]
+
+        dx = None
+        if mode == "train":
+            dx = dout * mask
+
+        elif mode == "test":
+            dx = dout
+        return dx
+    ```
+
 So far, we’ve discussed the static parts of a Neural Networks: how we can set up the network connectivity, the data, and the loss function. Now, we'll discuss the dynamics, or in other words, the process of learning the parameters and finding good hyperparameters.
 
 ## Gradient Checks
@@ -194,6 +260,132 @@ Performing a gradient check is as simple as comparing the analytic gradient to t
 
 !!! st "**Strategy** (Gradient Checks: Check Only Few Dimensions)"
     In practice the gradients can have sizes of million parameters. In these cases it is only practical to check some of the dimensions of the gradient and assume that the others are correct. **Be careful:** One issue to be careful with is to make sure to gradient check a few dimensions for every separate parameter. In some applications, people combine the parameters into a single large parameter vector for convenience. In these cases, for example, the biases could only take up a tiny number of parameters from the whole vector, so it is important to not sample at random but to take this into account and check that all parameters receive the correct gradients.
+
+!!! im "**Important Note** (Gradient Checks in Code)"
+
+    ``` py linenums="1"
+    def eval_numerical_gradient(f, x, verbose=True, h=0.00001):
+        """
+        a naive implementation of numerical gradient of f at x
+        - f should be a function that takes a single argument
+        - x is the point (numpy array) to evaluate the gradient at
+        """
+
+        fx = f(x)  # evaluate function value at original point
+        grad = np.zeros_like(x)
+        # iterate over all indexes in x
+        it = np.nditer(x, flags=["multi_index"], op_flags=["readwrite"])
+        while not it.finished:
+
+            # evaluate function at x+h
+            ix = it.multi_index
+            oldval = x[ix]
+            x[ix] = oldval + h  # increment by h
+            fxph = f(x)  # evalute f(x + h)
+            x[ix] = oldval - h
+            fxmh = f(x)  # evaluate f(x - h)
+            x[ix] = oldval  # restore
+
+            # compute the partial derivative with centered formula
+            grad[ix] = (fxph - fxmh) / (2 * h)  # the slope
+            if verbose:
+                print(ix, grad[ix])
+            it.iternext()  # step to next dimension
+
+        return grad
+
+    def eval_numerical_gradient_array(f, x, df, h=1e-5):
+        """
+        Evaluate a numeric gradient for a function that accepts a numpy
+        array and returns a numpy array.
+        """
+        grad = np.zeros_like(x)
+        it = np.nditer(x, flags=["multi_index"], op_flags=["readwrite"])
+        while not it.finished:
+            ix = it.multi_index
+
+            oldval = x[ix]
+            x[ix] = oldval + h
+            pos = f(x).copy()
+            x[ix] = oldval - h
+            neg = f(x).copy()
+            x[ix] = oldval
+
+            grad[ix] = np.sum((pos - neg) * df) / (2 * h)
+            it.iternext()
+        return grad
+
+    def eval_numerical_gradient_blobs(f, inputs, output, h=1e-5):
+        """
+        Compute numeric gradients for a function that operates on input
+        and output blobs.
+
+        We assume that f accepts several input blobs as arguments, followed by a
+        blob where outputs will be written. For example, f might be called like:
+
+        f(x, w, out)
+
+        where x and w are input Blobs, and the result of f will be written to out.
+
+        Inputs:
+        - f: function
+        - inputs: tuple of input blobs
+        - output: output blob
+        - h: step size
+        """
+        numeric_diffs = []
+        for input_blob in inputs:
+            diff = np.zeros_like(input_blob.diffs)
+            it = np.nditer(input_blob.vals, flags=["multi_index"], op_flags=["readwrite"])
+            while not it.finished:
+                idx = it.multi_index
+                orig = input_blob.vals[idx]
+
+                input_blob.vals[idx] = orig + h
+                f(*(inputs + (output,)))
+                pos = np.copy(output.vals)
+                input_blob.vals[idx] = orig - h
+                f(*(inputs + (output,)))
+                neg = np.copy(output.vals)
+                input_blob.vals[idx] = orig
+
+                diff[idx] = np.sum((pos - neg) * output.diffs) / (2.0 * h)
+
+                it.iternext()
+            numeric_diffs.append(diff)
+        return numeric_diffs
+
+    def eval_numerical_gradient_net(net, inputs, output, h=1e-5):
+        return eval_numerical_gradient_blobs(
+            lambda *args: net.forward(), inputs, output, h=h
+        )
+
+    def grad_check_sparse(f, x, analytic_grad, num_checks=10, h=1e-5):
+        """
+        sample a few random elements and only return numerical
+        in this dimensions.
+        """
+
+        for i in range(num_checks):
+            ix = tuple([randrange(m) for m in x.shape])
+
+            oldval = x[ix]
+            x[ix] = oldval + h  # increment by h
+            fxph = f(x)  # evaluate f(x + h)
+            x[ix] = oldval - h  # increment by h
+            fxmh = f(x)  # evaluate f(x - h)
+            x[ix] = oldval  # reset
+
+            grad_numerical = (fxph - fxmh) / (2 * h)
+            grad_analytic = analytic_grad[ix]
+            rel_error = abs(grad_numerical - grad_analytic) / (
+                abs(grad_numerical) + abs(grad_analytic)
+            )
+            print(
+                "numerical: %f analytic: %f, relative error: %e"
+                % (grad_numerical, grad_analytic, rel_error)
+            )
+    ```
 
 ## Before Learning: Sanity Checks Tips/Tricks
 Here are a few sanity checks you might consider running before you plunge into expensive optimization:
@@ -289,10 +481,160 @@ We note that optimization for deep networks is currently a very active area of r
 
     where learning_rate is a hyperparameter. When evaluated on the full dataset, and when the learning rate is low enough, this is guaranteed to make non-negative progress on the loss function.
 
+!!! df "**Algorithm** (SGD)"
+
+!!! im "**Important Note** (Implementing sgd)"
+
+    ``` cpp linenums="1"
+    def update(w, dw, config=None):
+        """
+        Inputs:
+        - w: A numpy array giving the current weights.
+        - dw: A numpy array of the same shape as w giving the gradient of the
+            loss with respect to w.
+        - config: A dictionary containing hyperparameter values such as learning
+            rate, momentum, etc. If the update rule requires caching values over many
+            iterations, then config will also hold these cached values.
+
+        Returns:
+        - next_w: The next point after the update.
+        - config: The config dictionary to be passed to the next iteration of the
+            update rule.
+
+        NOTE: For most update rules, the default learning rate will probably not
+        perform well; however the default values of the other hyperparameters should
+        work well for a variety of different problems.
+
+        For efficiency, update rules may perform in-place updates, mutating w and
+        setting next_w equal to w.
+        """
+
+    def sgd(w, dw, config=None):
+        """
+        Performs vanilla stochastic gradient descent.
+
+        config format:
+        - learning_rate: Scalar learning rate.
+        """
+        if config is None:
+            config = {}
+        config.setdefault("learning_rate", 1e-2)
+
+        w -= config["learning_rate"] * dw
+        return w, config
+    ```
+
 !!! df "**Algorithm** (Momentum Update)"
-    
 
+!!! im "**Important Note** (Implementing Momentum (with sgd))"
 
+    ``` py linenums="1"
+    def sgd_momentum(w, dw, config=None):
+        """
+        Performs stochastic gradient descent with momentum.
+
+        config format:
+        - learning_rate: Scalar learning rate.
+        - momentum: Scalar between 0 and 1 giving the momentum value.
+        Setting momentum = 0 reduces to sgd.
+        - velocity: A numpy array of the same shape as w and dw used to store a
+        moving average of the gradients.
+        """
+        if config is None:
+            config = {}
+        config.setdefault("learning_rate", 1e-2)
+        config.setdefault("momentum", 0.9)
+        v = config.get("velocity", np.zeros_like(w))
+
+        next_w = None
+
+        v = config["momentum"] * v - config["learning_rate"] * dw
+        next_w = w + v
+
+        config["velocity"] = v
+
+        return next_w, config
+    ```
+
+!!! df "**Algorithm** (rmsprop)"
+
+!!! im "**Important Note** (Implementing rmsprop)"
+
+    ``` py linenums="1"
+    def rmsprop(w, dw, config=None):
+    """
+    Uses the RMSProp update rule, which uses a moving average of squared
+    gradient values to set adaptive per-parameter learning rates.
+
+    config format:
+    - learning_rate: Scalar learning rate.
+    - decay_rate: Scalar between 0 and 1 giving the decay rate for the squared
+      gradient cache.
+    - epsilon: Small scalar used for smoothing to avoid dividing by zero.
+    - cache: Moving average of second moments of gradients.
+    """
+    if config is None:
+        config = {}
+    config.setdefault("learning_rate", 1e-2)
+    config.setdefault("decay_rate", 0.99)
+    config.setdefault("epsilon", 1e-8)
+    config.setdefault("cache", np.zeros_like(w))
+
+    next_w = None
+
+    config['cache'] = config['decay_rate'] * config['cache'] + (1 - config['decay_rate']) * (dw ** 2)
+    next_w = w - config['learning_rate'] / np.sqrt(config['cache'] + config['epsilon']) * dw
+
+    return next_w, config
+    ```
+
+!!! df "**Algorithm** (Adam)"
+
+!!! im "**Important Note** (Implementing Adam)"
+
+    ``` py linenums="1"
+    def adam(w, dw, config=None):
+        """
+        Uses the Adam update rule, which incorporates moving averages of both the
+        gradient and its square and a bias correction term.
+
+        config format:
+        - learning_rate: Scalar learning rate.
+        - beta1: Decay rate for moving average of first moment of gradient.
+        - beta2: Decay rate for moving average of second moment of gradient.
+        - epsilon: Small scalar used for smoothing to avoid dividing by zero.
+        - m: Moving average of gradient.
+        - v: Moving average of squared gradient.
+        - t: Iteration number.
+        """
+        if config is None:
+            config = {}
+        config.setdefault("learning_rate", 1e-3)
+        config.setdefault("beta1", 0.9)
+        config.setdefault("beta2", 0.999)
+        config.setdefault("epsilon", 1e-8)
+        config.setdefault("m", np.zeros_like(w))
+        config.setdefault("v", np.zeros_like(w))
+        config.setdefault("t", 0)
+
+        next_w = None
+
+        keys = ["learning_rate", "beta1", "beta2", "epsilon", "m", "v", "t"]
+        lr, beta1, beta2, epsilon, m, v, t = (config.get(key) for key in keys)
+        
+        t += 1
+        m = beta1 * m + (1 - beta1) * dw
+        mt = m / (1 - beta1 ** t)
+        v = beta2 * v + (1 - beta2) * (dw**2)
+        vt = v / (1 - beta2 ** t)
+        next_w = w - lr * mt / (np.sqrt(vt) + epsilon)
+
+        config['t'] = t
+        config['m'] = m
+        config['v'] = v
+
+        return next_w, config
+    ```
 
 ## Hyperparameter Optimization
 

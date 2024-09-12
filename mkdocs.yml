@@ -32,6 +32,8 @@ nav:
     - Basic Data Structure: ds/basics.md
   - OI Math:
     - Prime: math/prime.md
+  - Probability:
+    - Introduction: probability/intro.md
   - Real Analysis:
     - Basic Number Theory: math/numbers.md
   - Linear Algebra:
