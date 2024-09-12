@@ -83,3 +83,14 @@ $$
 \begin{bmatrix}2&-1\\-1&2\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix}=
 1\begin{bmatrix}2\\-1\end{bmatrix}+2\begin{bmatrix}-1\\2\end{bmatrix}=\begin{bmatrix}0\\3\end{bmatrix}
 $$
+
+If you think about this further, you will find that if we multiply a row vector by the matrix, we would essentially get a linear combination of the **Rows** of the matrix:
+
+$$
+\begin{aligned}
+\begin{bmatrix}1&2\end{bmatrix}\begin{bmatrix}2&-1\\-1&2\end{bmatrix}&=1\begin{bmatrix}2&-1\end{bmatrix}+2\begin{bmatrix}-1&2\end{bmatrix}
+\\&=\begin{bmatrix}0&3\end{bmatrix}
+\end{aligned}
+$$
+
+Such interpretations may seem trivial and cumbersome for now, but in the next chapter we shall see they come into use.
