@@ -38,6 +38,7 @@ nav:
     - Basic Number Theory: math/numbers.md
   - Linear Algebra:
     - Introduction: math/linear_alg/intro.md
+    - Elimination Matrix: math/linear_alg/elimination.md
 
 plugins:
   - glightbox
