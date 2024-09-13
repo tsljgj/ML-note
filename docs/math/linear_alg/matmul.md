@@ -15,7 +15,7 @@ A=
 \end{bmatrix}
 $$
 
-!!!df Column
+!!!df "Column"
 
     $$
     \begin{aligned}
@@ -43,7 +43,7 @@ $$
 
     Which implicates that each column of the product is a combination of the columns of the matrix $\begin{bmatrix}1&3\\2&4\\3&0\end{bmatrix}$.
 
-!!!df Row
+!!!df "Row"
 
     $$
     \begin{aligned}
@@ -75,7 +75,7 @@ $$
     \end{aligned}
     $$
 
-!!!df Column times Row
+!!!df "Column times Row"
 
     $$
     \begin{aligned}
@@ -99,7 +99,7 @@ $$
     \end{aligned}
     $$
 
-!!!df Chunk
+!!!df "Chunk"
     For this one, suppose two big matrices $A$ and $B$ that can be divided in to four chunks:
 
     $$
