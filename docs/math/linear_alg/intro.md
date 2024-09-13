@@ -4,8 +4,10 @@
 Essentially, Linear Algebra starts with solving n equations with m variables. To make things easy, we make n equal to m. For example:
 
 $$
+\begin{cases}
 2x - y = 0\\
 -x + 2y = 3
+\end{cases}
 $$
 
 In the language of Linear Algebra would be:
@@ -65,8 +67,10 @@ $$
 where the vector $\begin{bmatrix}a_1\\a_2\end{bmatrix}$ is the product, and $a_1$ and $a_2$ would be the "inner product" of the row on their left and the column on their top. Therefore:
 
 $$
-a_1 = \begin{bmatrix}2&-1\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix}=2\cdot1 + 2\cdot(-1) = 0,\\
+\begin{cases}
+a_1 = \begin{bmatrix}2&-1\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix}=2\cdot1 + 2\cdot(-1) = 0\\
 a_2 = \begin{bmatrix}-1&2\end{bmatrix}\begin{bmatrix}1\\2\end{bmatrix}=-1\cdot1 + 2\cdot2 = 3
+\end{cases}
 $$
 
 But in fact, there is another more essential way to think about matrix multiplications.
