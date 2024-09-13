@@ -76,6 +76,7 @@ $$
 
 ???pf "**Identity Matrix**"
     As you may have discovered, we can also multiply something by the matrix $A$ for it to remain unchanged. Such a matrix is called the **Identity Matrix** $I$. It takes the following form:
+
     $$
     I=
     \begin{bmatrix}
@@ -86,10 +87,13 @@ $$
     0&0&0&\cdots&1
     \end{bmatrix}
     $$
+
     And it satisfies:
+    
     $$
     \forall A, AI = IA = A
     $$
+    
     given that $A$ is a square matrix.
 
 Through a similar process, we can get the elementary matrix for the next step:
@@ -128,6 +132,7 @@ in most cases.
 
 ???pf "**Permutation Matrix**"
     Of course, you can also switch the rows of a matrix by multiplication, for example:
+
     $$
     \begin{bmatrix}
     0&1\\
@@ -142,7 +147,9 @@ in most cases.
     a&b
     \end{bmatrix}
     $$
+
     Notably,
+
     $$
     \begin{bmatrix}
     a&b\\
