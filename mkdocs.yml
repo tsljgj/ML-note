@@ -39,6 +39,7 @@ nav:
   - Linear Algebra:
     - Introduction: math/linear_alg/intro.md
     - Elimination Matrix: math/linear_alg/elimination.md
+    - Matrix Multiplication: math/linear_alg/matmul.md
 
 plugins:
   - glightbox
