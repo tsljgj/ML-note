@@ -37,6 +37,11 @@ nav:
     - Discrete Random Variables: probability/discrete-random-variables.md
   - Real Analysis:
     - Basic Number Theory: math/numbers.md
+  - Linear Algebra:
+    - Introduction: math/linear_alg/intro.md
+    - Elimination Matrix: math/linear_alg/elimination.md
+    - Matrix Multiplication: math/linear_alg/matmul.md
+    - Inverses: math/linear_alg/inverses.md
 
 plugins:
   - glightbox
