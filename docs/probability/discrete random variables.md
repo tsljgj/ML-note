@@ -69,3 +69,37 @@ Condition (2.6) essentially characterizes mass functions of discrete random vari
         \(\qed\)
 
     This theorem is very useful, since for many purposes it allows us to forget about sample spaces, event spaces, and probability measures; we need only say "let \( X \) be a random variable taking the value \( s_i \) with probability \( \pi_i \), for \( i \in I \)," and we can be sure that such a random variable exists without having to construct it explicitly.
+
+!!! df "**Definition** (Covariance)"
+    For two random variables $X, Y$, the covariance of $X, Y$, denoted $\text{Cov}(X,Y)$ is defined as
+    
+    $$\begin{align*}
+    \text{Cov}(X, Y) = \mathbb{E}(XY) - \mathbb{E}(X)\mathbb{E}(Y)
+    \end{align*}$$
+
+!!! df "**Definition** (Uncorrelated)"
+    If $X, Y$ have $\text{Cov}(X,Y) = 0$, we say that they are __*uncorrelated*__.
+
+!!! tm "**Theorem**"
+    If $X$ and $Y$ are independent then they are uncorrelated (but the converse does not hold in general).
+
+    ??? pf "**Proof**"
+
+!!! tm "**Theorem**"
+    
+    $$\begin{align*}
+    \text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)
+    \end{align*}$$
+
+    $$\begin{align*}
+    \text{Var}(X_1 + X_2 + \cdots + X_n) &= \sum_{i=1}^{n}\text{Var}(X_i) + 2\sum_{1\le i < j \le n}{\text{Cov}(X_i, X_j)} \\
+    &= \sum_{i=1}^{n}\text{Var}(X_i) + \sum_{i \neq j}{\text{Cov}(X_i, X_j)}
+    \end{align*}$$
+
+## Random Graph
+
+    
+    
+
+    
+    

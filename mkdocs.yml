@@ -34,7 +34,7 @@ nav:
     - Prime: math/prime.md
   - Probability:
     - Introduction: probability/intro.md
-    - Discrete Random Variables: probability/discrete-random-variables.md
+    - Discrete Random Variables: probability/discrete random variables.md
   - Real Analysis:
     - Basic Number Theory: math/numbers.md
   - Linear Algebra:
